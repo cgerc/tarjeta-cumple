@@ -1,16 +1,784 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="icon" href="/4geeks.ico" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello Rigo</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/front/main.jsx"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Cumpleaños Sonic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            background: linear-gradient(145deg, #0066ff, #0052cc);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        inset 0 -5px 20px rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 10;
+            border: 5px solid #ffd700;
+            margin: 20px auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 3%;
+            border: 5px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            img {
+                border-width: 3px;
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        @media (max-width: 480px) {
+            img {
+                border-width: 2px;
+                box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        .quill-1 {
+            left: -5px;
+            top: 15px;
+            transform: rotate(-30deg);
+        }
+
+        .quill-2 {
+            left: 10px;
+            top: 5px;
+            transform: rotate(-10deg);
+        }
+
+        .quill-3 {
+            right: 10px;
+            top: 5px;
+            transform: rotate(10deg);
+        }
+
+        .quill-4 {
+            right: -5px;
+            top: 15px;
+            transform: rotate(30deg);
+        }
+
+        .glove-left {
+            left: 5px;
+            top: 55px;
+        }
+
+        .glove-right {
+            right: 5px;
+            top: 55px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .title {
+            color: white;
+            font-size: 32px;
+            text-shadow: 3px 3px 0 #ff0000;
+            margin: 15px 0;
+            animation: flash 1.5s ease-in-out infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .invite-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-item {
+            margin: 15px 0;
+            font-size: 18px;
+            color: #0052cc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            animation: rotate-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes rotate-badge {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .button {
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 5px;
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 0, 0, 0.6);
+        }
+
+        .button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .speed-lines {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            opacity: 0;
+            animation: speed 1.5s ease-in-out infinite;
+        }
+
+        @keyframes speed {
+            0% { left: -100%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group label {
+            display: block;
+            color: #0052cc;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 3px solid #0066ff;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .guest-list {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .guest-list h3 {
+            color: #0052cc;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .guest-item {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #0066ff;
+        }
+
+        .guest-item p {
+            margin: 5px 0;
+            color: #0052cc;
+            font-size: 14px;
+        }
+
+        .guest-item strong {
+            color: #ff0000;
+        }
+
+        .message {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #0052cc;
+            font-weight: bold;
+            text-align: center;
+            animation: appear 0.5s ease-out;
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff0000, #ff6b00);
+            border: 3px solid #ffd700;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.6);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.8);
+        }
+
+        .music-control:active {
+            transform: scale(0.95);
+        }
+
+        .music-icon {
+            font-size: 28px;
+            color: white;
+        }
+
+        .music-control.playing {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @media (max-width: 480px) {
+            .music-control {
+                width: 50px;
+                height: 50px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .music-icon {
+                font-size: 24px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                border-radius: 20px;
+                border-width: 3px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .age-badge {
+                font-size: 22px;
+                padding: 8px 20px;
+            }
+
+            .info-item {
+                font-size: 16px;
+            }
+
+            .button {
+                padding: 12px 30px;
+                font-size: 16px;
+                margin: 15px 5px;
+            }
+
+            .invite-content,
+            .form-container,
+            .guest-list {
+                padding: 20px;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+
+            .container {
+                padding: 15px;
+                width: 95%;
+                border-radius: 15px;
+            }
+
+            .title {
+                font-size: 20px;
+                text-shadow: 2px 2px 0 #ff0000;
+            }
+
+            .age-badge {
+                font-size: 18px;
+                padding: 6px 15px;
+            }
+
+            .info-item {
+                font-size: 14px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .button {
+                padding: 10px 20px;
+                font-size: 14px;
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .invite-content,
+            .form-container,
+            .guest-list {
+                padding: 15px;
+            }
+
+            .guest-list {
+                max-height: 250px;
+            }
+
+            .guest-item {
+                padding: 10px;
+            }
+
+            .guest-item p {
+                font-size: 13px;
+            }
+
+            .message {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+
+        /* Tablet landscape */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                max-width: 700px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="rings" id="rings"></div>
+    
+    <div class="container">
+        <div class="speed-lines" style="top: 20%;"></div>
+        <div class="speed-lines" style="top: 50%; animation-delay: 0.5s;"></div>
+        <div class="speed-lines" style="top: 80%; animation-delay: 1s;"></div>
+        
+        <div class="sonic-header">
+           <img src="sonicbaile.gif" alt="Sonic bailando">
+            <h1 class="title" style="text-align:center">¡Acompáñanos a celebrar!</h1>
+        </div>
+
+        <div class="invite-content">   
+            <div style="text-align: center;">
+                <div class="age-badge">
+                    <span id="age">Santino 5</span> años
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="icon">📅</span>
+                <strong>Fecha:</strong> <span id="date">Sábado 17 de Enero</span>
+            </div>
+
+            <div class="info-item">
+                <span class="icon">⏰</span>
+                <strong>Hora:</strong> <span id="time">16:00 hrs</span>
+            </div>
+
+           <div class="info-item">
+                <span class="icon">📍</span>
+                <strong>Lugar:</strong> <a href="https://maps.app.goo.gl/6dsKesWeEKrHufhz9" target="_blank" id="place" style="color: #ff0000; text-decoration: none; font-weight: bold;">Ver ubicación en Google Maps 🗺️</a>
+            </div>
+
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <h3 style="color: #0052cc; text-align: center; margin-bottom: 20px;">📝 Confirmación de Asistencia</h3>
+            
+            <div class="form-group">
+                <label for="guestName">Nombre del/la invitad@ *</label>
+                <input type="text" id="guestName" placeholder="Nombre y apellido" required>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hasCar">
+                    <label for="hasCar">🚗 ¿Vendrás en auto?</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dietary">Restricciones alimentarias (opcional)</label>
+                <textarea id="dietary" placeholder="Ej: Vegetariano, alérgico a nueces, celíaco, etc."></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="button" onclick="confirmarAsistencia()">✓ CONFIRMAR ASISTENCIA</button>
+            </div>
+
+            <div id="confirmMessage" class="message hidden">
+                ¡Nos vemos en la fiesta! 🎉
+            </div>
+        </div>
+
+        <div class="guest-list hidden" id="guestList">
+            <h3>🎊 Lista de Invitados Confirmados</h3>
+            <div id="guestItems"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="button" onclick="verInvitados()">👥 VER INVITADOS</button>
+            <button class="button" onclick="descargarExcel()" style="background: linear-gradient(135deg, #00cc00, #00aa00);">📥 DESCARGAR EXCEL</button>
+        </div>
+    </div>
+
+    <!-- Control de música -->
+    <div class="music-control" id="musicControl" onclick="toggleMusic()">
+        <span class="music-icon" id="musicIcon">🎵</span>
+    </div>
+
+    <!-- Audio -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://cdn.freesound.org/previews/442/442127_5121236-lq.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Cargar SheetJS para Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+        let guests = [];
+        let musicPlaying = false;
+        const music = document.getElementById('backgroundMusic');
+        const musicControl = document.getElementById('musicControl');
+        const musicIcon = document.getElementById('musicIcon');
+
+        // Cargar invitados guardados al iniciar
+        async function cargarInvitados() {
+            try {
+                const result = await window.storage.get('sonic-guests', true);
+                if (result && result.value) {
+                    guests = JSON.parse(result.value);
+                    actualizarListaInvitados();
+                }
+            } catch (error) {
+                console.log('No hay invitados previos guardados');
+            }
+        }
+
+        // Guardar invitados
+        async function guardarInvitados() {
+            try {
+                await window.storage.set('sonic-guests', JSON.stringify(guests), true);
+            } catch (error) {
+                console.error('Error al guardar invitados:', error);
+            }
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicIcon.textContent = '🎵';
+                musicControl.classList.remove('playing');
+            } else {
+                music.play().catch(e => {
+                    console.log('Autoplay no permitido, espera interacción del usuario');
+                });
+                musicIcon.textContent = '🔊';
+                musicControl.classList.add('playing');
+            }
+            musicPlaying = !musicPlaying;
+        }
+
+        // Intentar reproducir música automáticamente
+        window.addEventListener('load', () => {
+            music.volume = 0.3;
+            music.play().then(() => {
+                musicPlaying = true;
+                musicIcon.textContent = '🔊';
+                musicControl.classList.add('playing');
+            }).catch(e => {
+                console.log('Autoplay bloqueado, el usuario debe hacer clic');
+            });
+            
+            // Cargar invitados guardados
+            cargarInvitados();
+        });
+
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        function createConfetti() {
+            const colors = ['#ff0000', '#ffd700', '#0066ff', '#00ff00', '#ff00ff'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.opacity = '1';
+                    confetti.style.animation = `confetti-fall ${2 + Math.random() * 2}s linear forwards`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        function confirmarAsistencia() {
+            const name = document.getElementById('guestName').value.trim();
+            const hasCar = document.getElementById('hasCar').checked;
+            const dietary = document.getElementById('dietary').value.trim();
+
+            if (!name) {
+                alert('Por favor ingresa tu nombre');
+                return;
+            }
+
+            const guest = {
+                name: name,
+                hasCar: hasCar,
+                dietary: dietary || 'Ninguna'
+            };
+
+            guests.push(guest);
+            guardarInvitados(); // Guardar en storage
+
+            const message = document.getElementById('confirmMessage');
+            message.classList.remove('hidden');
+            createConfetti();
+            
+            document.getElementById('guestName').value = '';
+            document.getElementById('hasCar').checked = false;
+            document.getElementById('dietary').value = '';
+
+            setTimeout(() => {
+                message.classList.add('hidden');
+            }, 3000);
+
+            actualizarListaInvitados();
+        }
+
+        function actualizarListaInvitados() {
+            const guestItems = document.getElementById('guestItems');
+            guestItems.innerHTML = '';
+
+            guests.forEach((guest, index) => {
+                const item = document.createElement('div');
+                item.className = 'guest-item';
+                item.innerHTML = `
+                    <p><strong>${guest.name}</strong></p>
+                    <p>🚗 Viene en auto: ${guest.hasCar ? 'Sí' : 'No'}</p>
+                    <p>🍽️ Restricciones: ${guest.dietary}</p>
+                `;
+                guestItems.appendChild(item);
+            });
+        }
+
+        function verInvitados() {
+            const guestList = document.getElementById('guestList');
+            if (guests.length === 0) {
+                alert('Aún no hay invitados confirmados');
+                return;
+            }
+            
+            if (guestList.classList.contains('hidden')) {
+                guestList.classList.remove('hidden');
+            } else {
+                guestList.classList.add('hidden');
+            }
+        }
+
+        function descargarExcel() {
+            if (guests.length === 0) {
+                alert('No hay invitados para descargar');
+                return;
+            }
+
+            // Preparar datos para Excel
+            const datosExcel = guests.map((guest, index) => ({
+                'N°': index + 1,
+                'Nombre': guest.name,
+                'Viene en Auto': guest.hasCar ? 'Sí' : 'No',
+                'Restricciones Alimentarias': guest.dietary
+            }));
+
+            // Crear libro de Excel
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(datosExcel);
+
+            // Ajustar ancho de columnas
+            ws['!cols'] = [
+                { wch: 5 },  // N°
+                { wch: 30 }, // Nombre
+                { wch: 15 }, // Viene en Auto
+                { wch: 40 }  // Restricciones
+            ];
+
+            // Agregar hoja al libro
+            XLSX.utils.book_append_sheet(wb, ws, 'Invitados');
+
+            // Descargar archivo
+            const fecha = new Date().toLocaleDateString('es-CL').replace(/\//g, '-');
+            XLSX.writeFile(wb, `Invitados_Cumpleaños_Santino_${fecha}.xlsx`);
+
+            alert('¡Excel descargado exitosamente! 📊');
+        }
+    </script>
+</body>
 </html>
